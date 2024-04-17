@@ -54,14 +54,24 @@ public class Cell {
         Pattern pattern = Pattern.compile("[0-9]+\\s*g");
         Matcher matcher = pattern.matcher(body_weight);
         if (matcher.find()) {
-            // Extracting the number from the string
+            // Getting the number from the string
             String weightInGrams = matcher.group();
-            // Removing the whitespace and "g" from the string
+            // Removing the whitespace and "g"
             weightInGrams = weightInGrams.substring(0, weightInGrams.length() - 2);
             // Converting the string to a float
             this.body_weight = Float.parseFloat(weightInGrams);
         } else {
             this.body_weight = null;
         }
+    }
+    public void setBody_sim(String body_sim) {
+        if (body_sim.toLowerCase().equals("no") || body_sim.toLowerCase().equals("yes")) {
+            this.body_sim = null;
+        } else {
+            this.body_sim = body_sim;
+        }
+    }
+    public void setDisplay_type(String display_type) {
+        this.display_type = display_type;
     }
 }
