@@ -74,4 +74,30 @@ public class Cell {
     public void setDisplay_type(String display_type) {
         this.display_type = display_type;
     }
+    public void setDisplay_size(String display_size) {
+        // Finding the display size in inches
+        // size in inches, so looking for at least 1 number followed by a whitespace then a "inches"
+        Pattern pattern = Pattern.compile("[0-9]+.+[0-9]\\s*inches");
+        Matcher matcher = pattern.matcher(display_size);
+        if (matcher.find()) {
+            // Getting the number from the string
+            String sizeInInch = matcher.group();
+            // Removing the whitespace and "inches"
+            sizeInInch = sizeInInch.substring(0, sizeInInch.length() - 7);
+            // Converting the string to a float
+            this.display_size = Float.parseFloat(sizeInInch);
+        } else {
+            this.display_size = null;
+        }
+    }
+    public void setDisplay_resolution(String display_resolution) {
+        this.display_resolution = display_resolution;
+    }
+    public void setFeatures_sensors(String features_sensors) {
+        if (features_sensors.toLowerCase().equals("12") || features_sensors.toLowerCase().equals("20.1")) {
+            this.features_sensors = null;
+        } else {
+            this.features_sensors = features_sensors;
+        }
+    }
 }
