@@ -15,7 +15,14 @@ public class Cell {
     String features_sensors;
     String platform_os;
     
-    // Setter methods for the fields
+    /* Setter methods for the fields 
+     * Data will be transformed during the setter methods
+     * Ex: the launch_announced field will be transformed from a string to an integer and will set only the year
+     * Invalid data will be set to null
+     * Ex: if launch_announced does not have a year, it will be set to null
+     * If a field/column has no invalid data, it will be set as is (If data is missing, Main class will handle it by setting it to null)
+     * Ex: if platform_os is missing, Main will set it to null using the setter method here 
+    */
     public void setOem(String oem) {
         this.oem = oem;
     }
@@ -98,6 +105,13 @@ public class Cell {
             this.features_sensors = null;
         } else {
             this.features_sensors = features_sensors;
+        }
+    }
+    public void setPlatform_os(String platform_os) {
+        if (platform_os.equals("")) {
+            this.platform_os = null;
+        } else {
+            this.platform_os = platform_os;
         }
     }
 }
