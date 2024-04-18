@@ -6,7 +6,7 @@ import java.util.ArrayList; // ArrayList class for a resizable array
 
 public class Main {
     public static void main(String[] args) {
-        
+        ArrayList<Cell> cells = new ArrayList<Cell>();
         try {
             // Putting file into File class type, csv file is in the same directory as the Main.java
             File cellFile = new File("cells.csv");
@@ -14,11 +14,54 @@ public class Main {
             while (cellScanner.hasNextLine()) {
                 String data = cellScanner.nextLine();
                 ArrayList<String> dataSplit = readLine(data);
-                System.out.println(dataSplit.size() + " columns");
+                Cell cell = new Cell(); // Creating a new cell object
                 for (int i = 0; i < dataSplit.size(); i++) {
-                    System.out.print(dataSplit.get(i) + "; ");
+                    // Setting the fields of the cell object
+                    String column;
+                    if (dataSplit.get(i).equals("-") || dataSplit.get(i).equals(null)) {
+                        column = null;
+                    } else {
+                        column = dataSplit.get(i);
+                    }
+                    switch (i) {
+                        case 0:
+                            cell.setOem(column);
+                            break;
+                        case 1:
+                            cell.setModel(column);
+                            break;
+                        case 2:
+                            cell.setLaunch_announced(column);
+                            break;
+                        case 3:
+                            cell.setLaunch_status(column);
+                            break;
+                        case 4:
+                            cell.setBody_dimensions(column);
+                            break;
+                        case 5:
+                            cell.setBody_weight(column);
+                            break;
+                        case 6:
+                            cell.setBody_sim(column);
+                            break;
+                        case 7:
+                            cell.setDisplay_type(column);
+                            break;
+                        case 8:
+                            cell.setDisplay_size(column);
+                            break;
+                        case 9:
+                            cell.setDisplay_resolution(column);
+                            break;
+                        case 10:
+                            cell.setFeatures_sensors(column);
+                            break;
+                        case 11:
+                            cell.setPlatform_os(column);
+                            break;
+                    }
                 }
-                System.out.println("");
             }
             cellScanner.close();
         } catch (FileNotFoundException e) {

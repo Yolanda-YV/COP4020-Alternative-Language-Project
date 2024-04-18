@@ -20,7 +20,7 @@ public class Cell {
      * Ex: the launch_announced field will be transformed from a string to an integer and will set only the year
      * Invalid data will be set to null
      * Ex: if launch_announced does not have a year, it will be set to null
-     * If a field/column has no invalid data, it will be set as is (If data is missing, Main class will handle it by setting it to null)
+     * If a field/column has no invalid data, it will be set as is (If data is missing or has "-", Main class will handle it by setting it to null)
      * Ex: if platform_os is missing, Main will set it to null using the setter method here 
     */
     public void setOem(String oem) {
@@ -33,6 +33,7 @@ public class Cell {
         // Finding year in the launch_announced string using pattern matching (4 sequential numbers)
         Pattern pattern = Pattern.compile("[0-9]{4}");
         Matcher matcher = pattern.matcher(launch_announced);
+        // If found, store the year as an integer. Otherwise, set to null (invalid, missing data, or "-")
         if (matcher.find()) {
             this.launch_announced = Integer.parseInt(matcher.group());
         } else {
@@ -49,6 +50,9 @@ public class Cell {
             this.launch_status = matcher.group();
         } else if (launch_status.toLowerCase().equals("cancelled") || (launch_status.toLowerCase().equals("discontinued"))) {
             // If cancelled or discontinued, store the status as is
+            this.launch_status = launch_status;
+        } else {
+            // If not a year or status, set to null (invalid, missing data, or "-")
             this.launch_status = null;
         }
     }
