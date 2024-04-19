@@ -11,14 +11,21 @@ public class Main {
             // Putting file into File class type, csv file is in the same directory as the Main.java
             File cellFile = new File("cells.csv");
             Scanner cellScanner = new Scanner(cellFile);
+            Integer TEST = 0;
+            String TESTDATA = "HTC,Schubert,Not officially announced yet,Discontinued,-,-,Mini-SIM,\"TFT capacitive touchscreen, 16M colors\",,,\"Accelerometer, proximity\",Microsoft Windows Phone 7";
+            // cellScanner.hasNextLine() ORIGINAL CONDITION
             while (cellScanner.hasNextLine()) {
+                //TEST++;
                 String data = cellScanner.nextLine();
                 ArrayList<String> dataSplit = readLine(data);
                 Cell cell = new Cell(); // Creating a new cell object
+                System.out.println(dataSplit.size() + " COLUMNS");
                 for (int i = 0; i < dataSplit.size(); i++) {
                     // Setting the fields of the cell object
-                    String column;
-                    if (dataSplit.get(i).equals("-") || dataSplit.get(i).equals(null)) {
+                    String column = dataSplit.get(i);
+                    System.out.print(column + "; ");
+                    // BELOW IS ORIGINAL CODE, COMMENTED FOR TESTING
+                    /*if (dataSplit.get(i).equals("-") || dataSplit.get(i).equals(null)) {
                         column = null;
                     } else {
                         column = dataSplit.get(i);
@@ -60,8 +67,9 @@ public class Main {
                         case 11:
                             cell.setPlatform_os(column);
                             break;
-                    }
+                    }*/
                 }
+                System.out.println("\n");
             }
             cellScanner.close();
         } catch (FileNotFoundException e) {
@@ -75,12 +83,14 @@ public class Main {
         // 1. double quotes on the outside, inside
         // 2. no double quotes on the outside, no commas inside, but has at least one character inside
         ArrayList<String> columns = new ArrayList<String>();
-        Pattern pattern = Pattern.compile("\"([^\"]*)\"|([^,]+)");
+        Pattern pattern = Pattern.compile("\"([^\"]*)\"|([^,]+)|(,{1})(?=(?:,{1}))|,$");
         Matcher matcher = pattern.matcher(line);
         // find gets the nexts expression that matches pattern (returns true if found, false if not)
+        System.out.println("MATCHES:");
         while (matcher.find()) {
             // group gets the matched expression
-            String column = matcher.group(1) != null ? matcher.group(1) : matcher.group(2);
+            String column = matcher.group(1) != null ? matcher.group(1) : matcher.group(2) != null ? matcher.group(2) : "";
+            //System.out.println(matcher.group(1) + " " + matcher.group(2) + " " + matcher.group(3));
             columns.add(column);
         }
         return columns;
