@@ -20,14 +20,30 @@ public class Cell {
      * Ex: the launch_announced field will be transformed from a string to an integer and will set only the year
      * Invalid data will be set to null
      * Ex: if launch_announced does not have a year, it will be set to null
-     * If a field/column has no invalid data, it will be set as is (If data is missing or has "-", Main class will handle it by setting it to null)
-     * Ex: if platform_os is missing, Main will set it to null using the setter method here 
+     * If a field/column has no invalid data, it will be set as is (If data is missing or has "-" setter methods will set it to null)
+     * Ex: if platform_os is missing, setPlatform_os will set it to null
     */
     public void setOem(String oem) {
-        this.oem = oem;
+        switch (oem) {
+            case "-":
+            case "":
+                this.oem = null;
+                break;
+            default:
+                this.oem = oem;
+                break;
+        }
     }
     public void setModel(String model) {
-        this.model = model;
+        switch (model) {
+            case "-":
+            case "":
+                this.model = null;
+                break;
+            default:
+                this.model = model;
+                break;
+        }
     }
     public void setLaunch_announced(String launch_announced) {
         // Finding year in the launch_announced string using pattern matching (4 sequential numbers)
@@ -57,7 +73,15 @@ public class Cell {
         }
     }
     public void setBody_dimensions(String body_dimensions) {
-        this.body_dimensions = body_dimensions;
+        switch (body_dimensions) {
+            case "-":
+            case "":
+                this.body_dimensions = null;
+                break;
+            default:
+                this.body_dimensions = body_dimensions;
+                break;
+        }
     }
     public void setBody_weight(String body_weight) {
         // Finding the weight in grams
@@ -76,14 +100,28 @@ public class Cell {
         }
     }
     public void setBody_sim(String body_sim) {
-        if (body_sim.toLowerCase().equals("no") || body_sim.toLowerCase().equals("yes")) {
-            this.body_sim = null;
-        } else {
-            this.body_sim = body_sim;
+        switch (body_sim.toLowerCase()) {
+            case "-":
+            case "":
+            case "no":
+            case "yes":
+                this.body_sim = null;
+                break;
+            default:
+                this.body_sim = body_sim;
+                break;
         }
     }
     public void setDisplay_type(String display_type) {
-        this.display_type = display_type;
+        switch (display_type) {
+            case "-":
+            case "":
+                this.display_type = null;
+                break;
+            default:
+                this.display_type = display_type;
+                break;
+        }
     }
     public void setDisplay_size(String display_size) {
         // Finding the display size in inches
@@ -102,7 +140,15 @@ public class Cell {
         }
     }
     public void setDisplay_resolution(String display_resolution) {
-        this.display_resolution = display_resolution;
+        switch (display_resolution) {
+            case "-":
+            case "":
+                this.display_resolution = null;
+                break;
+            default:
+                this.display_resolution = display_resolution;
+                break;
+        }
     }
     public void setFeatures_sensors(String features_sensors) {
         if (features_sensors.toLowerCase().equals("12") || features_sensors.toLowerCase().equals("20.1")) {
@@ -110,12 +156,25 @@ public class Cell {
         } else {
             this.features_sensors = features_sensors;
         }
+        switch (features_sensors.toLowerCase()) {
+            case "-":
+            case "":
+            case "12":
+            case "20.1":
+                this.features_sensors = null;
+                break;
+            default:
+                this.features_sensors = features_sensors;
+                break;
+        }
     }
     public void setPlatform_os(String platform_os) {
-        if (platform_os.equals("")) {
-            this.platform_os = null;
-        } else {
+        Pattern pattern = Pattern.compile("([^,]+)");
+        Matcher matcher = pattern.matcher(platform_os);
+        if (matcher.find()) {
             this.platform_os = platform_os;
+        } else {
+            this.platform_os = null;
         }
     }
 }

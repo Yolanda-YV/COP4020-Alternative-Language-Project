@@ -11,72 +11,15 @@ public class Main {
             // Putting file into File class type, csv file is in the same directory as the Main.java
             File cellFile = new File("cells.csv");
             Scanner cellScanner = new Scanner(cellFile);
-            Integer TEST = 0;
-            String TESTDATA = "HTC,Schubert,Not officially announced yet,Discontinued,-,-,Mini-SIM,\"TFT capacitive touchscreen, 16M colors\",,,\"Accelerometer, proximity\",Microsoft Windows Phone 7";
             // cellScanner.hasNextLine() ORIGINAL CONDITION
             while (cellScanner.hasNextLine()) {
-                //TEST++;
                 String data = cellScanner.nextLine();
                 ArrayList<String> dataSplit = readLine(data);
-                Cell cell = new Cell(); // Creating a new cell object
-                System.out.println(dataSplit.size() + " COLUMNS");
-                for (int i = 0; i < dataSplit.size(); i++) {
-                    // Setting the fields of the cell object
-                    String column = dataSplit.get(i);
-                    System.out.print(column + "; ");
-                    // BELOW IS ORIGINAL CODE, COMMENTED FOR TESTING
-                    /*if (dataSplit.get(i).equals("-") || dataSplit.get(i).equals(null)) {
-                        column = null;
-                    } else {
-                        column = dataSplit.get(i);
-                    }
-                    switch (i) {
-                        case 0:
-                            cell.setOem(column);
-                            break;
-                        case 1:
-                            cell.setModel(column);
-                            break;
-                        case 2:
-                            cell.setLaunch_announced(column);
-                            break;
-                        case 3:
-                            cell.setLaunch_status(column);
-                            break;
-                        case 4:
-                            cell.setBody_dimensions(column);
-                            break;
-                        case 5:
-                            cell.setBody_weight(column);
-                            break;
-                        case 6:
-                            cell.setBody_sim(column);
-                            break;
-                        case 7:
-                            cell.setDisplay_type(column);
-                            break;
-                        case 8:
-                            cell.setDisplay_size(column);
-                            break;
-                        case 9:
-                            cell.setDisplay_resolution(column);
-                            break;
-                        case 10:
-                            cell.setFeatures_sensors(column);
-                            break;
-                        case 11:
-                            cell.setPlatform_os(column);
-                            break;
-                    }*/
-                }
-<<<<<<< HEAD
-                System.out.println("\n");
-=======
+                Cell cell = createCell(dataSplit);
                 cells.add(cell);
->>>>>>> 4167365f3fec3d8cce9f4458a77b4b2070544600
             }
             cellScanner.close();
-            System.out.println(cells);
+            System.out.println("Number of cells: "+cells.size());
         } catch (FileNotFoundException e) {
             System.out.println("File not found: " + e.getMessage());
         } 
@@ -91,7 +34,6 @@ public class Main {
         Pattern pattern = Pattern.compile("\"([^\"]*)\"|([^,]+)|(,{1})(?=(?:,{1}))|,$");
         Matcher matcher = pattern.matcher(line);
         // find gets the nexts expression that matches pattern (returns true if found, false if not)
-        System.out.println("MATCHES:");
         while (matcher.find()) {
             // group gets the matched expression
             String column = matcher.group(1) != null ? matcher.group(1) : matcher.group(2) != null ? matcher.group(2) : "";
@@ -99,5 +41,56 @@ public class Main {
             columns.add(column);
         }
         return columns;
+    }
+
+    // Method to create new cell object and set its attributes
+    // Takes in a string array of values from a row in the CSV file
+    // Returns a cell object
+    public static Cell createCell(ArrayList<String> data) {
+        Cell cell = new Cell();
+        for (int i = 0; i < data.size(); i++) {
+            // Setting the fields of the cell object
+            String column = data.get(i);
+            switch (i) {
+                case 0:
+                    cell.setOem(column);
+                    break;
+                case 1:
+                    cell.setModel(column);
+                    break;
+                case 2:
+                    cell.setLaunch_announced(column);
+                    break;
+                case 3:
+                    cell.setLaunch_status(column);
+                    break;
+                case 4:
+                    cell.setBody_dimensions(column);
+                    break;
+                case 5:
+                    cell.setBody_weight(column);
+                    break;
+                case 6:
+                    cell.setBody_sim(column);
+                    break;
+                case 7:
+                    cell.setDisplay_type(column);
+                    break;
+                case 8:
+                    cell.setDisplay_size(column);
+                    break;
+                case 9:
+                    cell.setDisplay_resolution(column);
+                    break;
+                case 10:
+                    cell.setFeatures_sensors(column);
+                    break;
+                case 11:
+                    cell.setPlatform_os(column);
+                    break;
+            }
+        }
+
+        return cell;
     }
 }
