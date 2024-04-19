@@ -19,9 +19,10 @@ public class Main {
                 cells.add(cell);
             }
             cellScanner.close();
+            // Printing the number of cells and the information of each cell
             System.out.println("Number of cells: "+cells.size());
-            for (int i = 0; i < cells.size(); i++) {
-                System.out.println("Cell " + (i + 1) + ":");
+            for (int i = 1; i < cells.size(); i++) {
+                System.out.println("Cell " + (i) + ":");
                 printCell(cells.get(i));
             }
         } catch (FileNotFoundException e) {

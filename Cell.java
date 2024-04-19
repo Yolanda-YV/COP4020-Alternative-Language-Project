@@ -1,19 +1,21 @@
 import java.util.regex.*;
+import java.util.ArrayList;
+import java.util.Scanner; // for reading user input
 
 public class Cell {
     // Fields or columns from the CSV file cells, will be initialized by setter methods
-    String oem;
-    String model;
-    Integer launch_announced;
-    String launch_status;
-    String body_dimensions;
-    Float body_weight;
-    String body_sim;
-    String display_type;
-    Float display_size;
-    String display_resolution;
-    String features_sensors;
-    String platform_os;
+    private String oem;
+    private String model;
+    private Integer launch_announced;
+    private String launch_status;
+    private String body_dimensions;
+    private Float body_weight;
+    private String body_sim;
+    private String display_type;
+    private Float display_size;
+    private String display_resolution;
+    private String features_sensors;
+    private String platform_os;
     
     /* Setter methods for the fields 
      * Data will be transformed during the setter methods
@@ -214,5 +216,147 @@ public class Cell {
     }
     public String getPlatform_os() {
         return platform_os;
+    }
+
+    /* Other methods */
+    // Helper method
+    // Takes the cell object and the name of the attribute/column and returns the value of the attribute/column as a string
+    private static String getValue(Cell cell, String attribute) {
+        switch (attribute) {
+            case "oem":
+                return String.valueOf(cell.getOem());
+            case "model":
+                return String.valueOf(cell.getModel());
+            case "launch_announced":
+                return String.valueOf(cell.getLaunch_announced());
+            case "launch_status":
+                return String.valueOf(cell.getLaunch_status());
+            case "body_dimensions":
+                return String.valueOf(cell.getBody_dimensions());
+            case "body_weight":
+                return String.valueOf(cell.getBody_weight());
+            case "body_sim":
+                return String.valueOf(cell.getBody_sim());
+            case "display_type":
+                return String.valueOf(cell.getDisplay_type());
+            case "display_size":
+                return String.valueOf(cell.getDisplay_size());
+            case "display_resolution":
+                return String.valueOf(cell.getDisplay_resolution());
+            case "features_sensors":
+                return String.valueOf(cell.getFeatures_sensors());
+            case "platform_os":
+                return String.valueOf(cell.getPlatform_os());
+            default:
+                System.err.println("Invalid attribute/column name");
+                return null;
+        }
+    }
+    // Takes in an array list of cell objects and calculates the average weight of the cells in grams, 
+    // returns a double
+    public static double calculateAverageWeight(ArrayList<Cell> cells) {
+        double totalWeight = 0;
+        int totalCells = cells.size();
+        for (int i = 0; i < totalCells; i++) {
+            if (cells.get(i).getBody_weight() != null) {
+                totalWeight += cells.get(i).getBody_weight();
+                totalCells++;
+            }
+        }
+        return totalWeight / totalCells;
+    }
+    // Takes in an array list of cell objects and calculates the average display size of the cells in inches, 
+    // returns a double
+    public static double calculateAverageDisplaySize(ArrayList<Cell> cells) {
+        double totalSize = 0;
+        int totalCells = cells.size();
+        for (int i = 0; i < totalCells; i++) {
+            if (cells.get(i).getDisplay_size() != null) {
+                totalSize += cells.get(i).getDisplay_size();
+                totalCells++;
+            }
+        }
+        return totalSize / totalCells;
+    }
+    // Takes in an array list of cell objects and the attribute/column name, 
+    // returns an array list of unique values for the attribute/column
+    public static ArrayList<String> getUniqueValues(ArrayList<Cell> cells, String attribute) {
+        ArrayList<String> uniqueValues = new ArrayList<String>();
+        for (int i = 0; i < cells.size(); i++) {
+            String value = getValue(cells.get(i), attribute);
+            if (!uniqueValues.contains(value)) {
+                uniqueValues.add(value);
+            }
+        }
+        return uniqueValues;
+    }
+    // Takes in an array list of cell objects and the index of a cell to delete OR the attribute name and value of cells to delete
+    // Overloading deleteCell method to have 2 different ways to delete cells
+    // Returns the updated array list of cell objects
+    public static ArrayList<Cell> deleteCell(ArrayList<Cell> cells, int index) {
+        if (index >= 0 && index < cells.size()) {
+            cells.remove(index);
+        } else {
+            System.err.println("Invalid index");
+        }
+        return cells;
+    }
+    public static ArrayList<Cell> deleteCell(ArrayList<Cell> cells, String attribute, String value) {
+        for (int i = 0; i < cells.size(); i++) {
+            if (getValue(cells.get(i), attribute).equals(value)) {
+                cells.remove(i);
+                i--; // Decrement i because the size of the array list has decreased
+            }
+        }
+        return cells;
+    }
+    // Takes in an array list of cell objects and asks for user input to add a new cell object
+    // Returns the updated array list of cell objects
+    public static ArrayList<Cell> addCell(ArrayList<Cell> cells) {
+        // Uses scanner class to get user input, uses next line to get a string value
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("\nEnter the cell data below, invalid values will be set to null");
+        System.out.print("\tOEM: ");
+        String oem = scanner.nextLine();
+        System.out.print("\tModel: ");
+        String model = scanner.nextLine();
+        System.out.print("\tLaunch Announced: ");
+        String launch_announced = scanner.nextLine();
+        System.out.print("\tLaunch Status: ");
+        String launch_status = scanner.nextLine();
+        System.out.print("\tBody Dimensions: ");
+        String body_dimensions = scanner.nextLine();
+        System.out.print("\tBody Weight: ");
+        String body_weight = scanner.nextLine();
+        System.out.print("\tBody SIM: ");
+        String body_sim = scanner.nextLine();
+        System.out.print("\tDisplay Type: ");
+        String display_type = scanner.nextLine();
+        System.out.print("\tDisplay Size: ");
+        String display_size = scanner.nextLine();
+        System.out.print("\tDisplay Resolution: ");
+        String display_resolution = scanner.nextLine();
+        System.out.print("\tFeatures Sensors: ");
+        String features_sensors = scanner.nextLine();
+        System.out.print("\tPlatform OS: ");
+        String platform_os = scanner.nextLine();
+        scanner.close(); // Closing the scanner
+        // Creating a new cell object and setting its attributes
+        Cell cell = new Cell();
+        cell.setOem(oem);
+        cell.setModel(model);
+        cell.setLaunch_announced(launch_announced);
+        cell.setLaunch_status(launch_status);
+        cell.setBody_dimensions(body_dimensions);
+        cell.setBody_weight(body_weight);
+        cell.setBody_sim(body_sim);
+        cell.setDisplay_type(display_type);
+        cell.setDisplay_size(display_size);
+        cell.setDisplay_resolution(display_resolution);
+        cell.setFeatures_sensors(features_sensors);
+        cell.setPlatform_os(platform_os);
+        // Adding the new cell object to the array list
+        cells.add(cell);
+        return cells;
     }
 }
