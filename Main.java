@@ -20,6 +20,10 @@ public class Main {
             }
             cellScanner.close();
             System.out.println("Number of cells: "+cells.size());
+            for (int i = 0; i < cells.size(); i++) {
+                System.out.println("Cell " + (i + 1) + ":");
+                printCell(cells.get(i));
+            }
         } catch (FileNotFoundException e) {
             System.out.println("File not found: " + e.getMessage());
         } 
@@ -27,9 +31,11 @@ public class Main {
 
     // Method to read a line from a CSV file and split it into columns
     public static ArrayList<String> readLine(String line) {
-        // Finding 2 pattern matches: column with no outter "" or internal commas, column with outter "" and internal commas
-        // 1. double quotes on the outside, inside
+        // Finding 4 pattern matches:
+        // 1. double quotes on the outside
         // 2. no double quotes on the outside, no commas inside, but has at least one character inside
+        // 3. a comma followed by a comma (missing value)
+        // 4. a comma followed by the end of the line (missing value)
         ArrayList<String> columns = new ArrayList<String>();
         Pattern pattern = Pattern.compile("\"([^\"]*)\"|([^,]+)|(,{1})(?=(?:,{1}))|,$");
         Matcher matcher = pattern.matcher(line);
@@ -37,7 +43,6 @@ public class Main {
         while (matcher.find()) {
             // group gets the matched expression
             String column = matcher.group(1) != null ? matcher.group(1) : matcher.group(2) != null ? matcher.group(2) : "";
-            //System.out.println(matcher.group(1) + " " + matcher.group(2) + " " + matcher.group(3));
             columns.add(column);
         }
         return columns;
@@ -92,5 +97,21 @@ public class Main {
         }
 
         return cell;
+    }
+
+    // Method for printing the information of a cell object
+    public static void printCell(Cell cell) {
+        System.out.println("\tOEM: " + cell.getOem());
+        System.out.println("\tModel: " + cell.getModel());
+        System.out.println("\tLaunch Announced: " + cell.getLaunch_announced());
+        System.out.println("\tLaunch Status: " + cell.getLaunch_status());
+        System.out.println("\tBody Dimensions: " + cell.getBody_dimensions());
+        System.out.println("\tBody Weight (grams): " + cell.getBody_weight());
+        System.out.println("\tBody SIM: " + cell.getBody_sim());
+        System.out.println("\tDisplay Type: " + cell.getDisplay_type());
+        System.out.println("\tDisplay Size (inches): " + cell.getDisplay_size());
+        System.out.println("\tDisplay Resolution: " + cell.getDisplay_resolution());
+        System.out.println("\tFeatures Sensors: " + cell.getFeatures_sensors());
+        System.out.println("\tPlatform OS: " + cell.getPlatform_os());
     }
 }

@@ -172,9 +172,47 @@ public class Cell {
         Pattern pattern = Pattern.compile("([^,]+)");
         Matcher matcher = pattern.matcher(platform_os);
         if (matcher.find()) {
-            this.platform_os = platform_os;
+            this.platform_os = matcher.group();
         } else {
             this.platform_os = null;
         }
+    }
+
+    /* Getter methods for the fields */
+    public String getOem() {
+        return oem;
+    }
+    public String getModel() {
+        return model;
+    }
+    public Integer getLaunch_announced() {
+        return launch_announced;
+    }
+    public String getLaunch_status() {
+        return launch_status;
+    }
+    public String getBody_dimensions() {
+        return body_dimensions;
+    }
+    public Float getBody_weight() {
+        return body_weight;
+    }
+    public String getBody_sim() {
+        return body_sim;
+    }
+    public String getDisplay_type() {
+        return display_type;
+    }
+    public Float getDisplay_size() {
+        return display_size;
+    }
+    public String getDisplay_resolution() {
+        return display_resolution;
+    }
+    public String getFeatures_sensors() {
+        return features_sensors;
+    }
+    public String getPlatform_os() {
+        return platform_os;
     }
 }
