@@ -69,9 +69,14 @@ public class Main {
                             break;
                     }*/
                 }
+<<<<<<< HEAD
                 System.out.println("\n");
+=======
+                cells.add(cell);
+>>>>>>> 4167365f3fec3d8cce9f4458a77b4b2070544600
             }
             cellScanner.close();
+            System.out.println(cells);
         } catch (FileNotFoundException e) {
             System.out.println("File not found: " + e.getMessage());
         } 
