@@ -252,6 +252,27 @@ public class Cell {
                 return null;
         }
     }
+    // Takes in an array list of cell objects and a column name
+    // returns the mode of the values in the column as a string
+    public static String calculateMode(ArrayList<Cell> cells, String column) {
+        ArrayList<String> uniqueValues = getUniqueValues(cells, column);
+        int maxCount = 0; //highest frequency of a value
+        String mode = null;
+        for (int i = 0; i < uniqueValues.size(); i++) {
+            int count = 0;
+            for (int j = 0; j < cells.size(); j++) {
+                if (getValue(cells.get(j), column).equals(uniqueValues.get(i))) {
+                    count++;
+                }
+            }
+            if (count > maxCount) {
+                // if count for the current value is higher than the max count, update the max count and mode
+                maxCount = count;
+                mode = uniqueValues.get(i);
+            }
+        }
+        return mode;
+    }
     // Takes in an array list of cell objects and calculates the average weight of the cells in grams, 
     // returns a double
     public static double calculateAverageWeight(ArrayList<Cell> cells) {
@@ -259,8 +280,8 @@ public class Cell {
         int totalCells = cells.size();
         for (int i = 0; i < totalCells; i++) {
             if (cells.get(i).getBody_weight() != null) {
+                // Invalid values were already set to null and will not be included in the calculation
                 totalWeight += cells.get(i).getBody_weight();
-                totalCells++;
             }
         }
         return totalWeight / totalCells;
@@ -273,10 +294,20 @@ public class Cell {
         for (int i = 0; i < totalCells; i++) {
             if (cells.get(i).getDisplay_size() != null) {
                 totalSize += cells.get(i).getDisplay_size();
-                totalCells++;
             }
         }
         return totalSize / totalCells;
+    }
+    // Takes in an array list of cell objects, the attribute/column name, and the value to search for
+    // returns an array list of cells from the original array list that have the same value for the attribute/column
+    public static ArrayList<Cell> searchByAttribute(ArrayList<Cell> cells, String attribute, String value) {
+        ArrayList<Cell> searchResults = new ArrayList<Cell>();
+        for (int i = 0; i < cells.size(); i++) {
+            if (getValue(cells.get(i), attribute).equals(value)) {
+                searchResults.add(cells.get(i));
+            }
+        }
+        return searchResults;
     }
     // Takes in an array list of cell objects and the attribute/column name, 
     // returns an array list of unique values for the attribute/column
@@ -290,7 +321,10 @@ public class Cell {
         }
         return uniqueValues;
     }
-    // Takes in an array list of cell objects and the index of a cell to delete OR the attribute name and value of cells to delete
+    // Takes in an array list of cell objects and either:
+    //  - the index of a cell to delete 
+    //  - the attribute name and value of cells to delete
+    //  - the attribute name and a numerical value to delete cells with a value less than the numerical value
     // Overloading deleteCell method to have 2 different ways to delete cells
     // Returns the updated array list of cell objects
     public static ArrayList<Cell> deleteCell(ArrayList<Cell> cells, int index) {

@@ -20,14 +20,27 @@ public class Main {
             }
             cellScanner.close();
             // Printing the number of cells and the information of each cell
-            System.out.println("Number of cells: "+cells.size());
-            for (int i = 1; i < cells.size(); i++) {
-                System.out.println("Cell " + (i) + ":");
-                printCell(cells.get(i));
-            }
+            System.out.println("Number of total cells: "+cells.size());
         } catch (FileNotFoundException e) {
             System.out.println("File not found: " + e.getMessage());
         } 
+
+        // Finding company with highest average weight of phone body
+        double highestAvgWeight = 0;
+        String highestAvgWeightCompany = "";
+        // Getting unique values of oem (companies)
+        ArrayList<String> companies = Cell.getUniqueValues(cells, "oem");
+        for (int i = 0; i < companies.size(); i++) {
+            // Getting all cells of a company from cells
+            ArrayList<Cell> companyCells = Cell.searchByAttribute(cells, "oem", companies.get(i));
+            // Getting average weight of all cells of a company
+            double avgWeight = Cell.calculateAverageWeight(companyCells);
+            if (avgWeight > highestAvgWeight) {
+                highestAvgWeight = avgWeight;
+                highestAvgWeightCompany = companies.get(i);
+            }
+        }
+        System.out.println("Company with highest average weight of phone body: " + highestAvgWeightCompany + " with an average of " + highestAvgWeight + " grams");
     }
 
     // Method to read a line from a CSV file and split it into columns
@@ -49,7 +62,7 @@ public class Main {
         return columns;
     }
 
-    // Method to create new cell object and set its attributes
+    // Method to create new cell object and set its attributes, given a line of valid data
     // Takes in a string array of values from a row in the CSV file
     // Returns a cell object
     public static Cell createCell(ArrayList<String> data) {
@@ -114,5 +127,13 @@ public class Main {
         System.out.println("\tDisplay Resolution: " + cell.getDisplay_resolution());
         System.out.println("\tFeatures Sensors: " + cell.getFeatures_sensors());
         System.out.println("\tPlatform OS: " + cell.getPlatform_os());
+    }
+
+    // Method for printing the information of multiple cell objcts in an array list
+    public static void printCells(ArrayList<Cell> cells) {
+        for (int i = 0; i < cells.size(); i++) {
+            System.out.println("Cell " + (i + 1) + ":");
+            printCell(cells.get(i));
+        }
     }
 }
