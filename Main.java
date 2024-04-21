@@ -41,6 +41,20 @@ public class Main {
             }
         }
         System.out.println("Company with highest average weight of phone body: " + highestAvgWeightCompany + " with an average of " + highestAvgWeight + " grams");
+    
+        // Finding phones with different announcement and release years
+        ArrayList<Cell> diffYears = new ArrayList<Cell>();
+        for (int i = 0; i < cells.size(); i++) {
+            Cell cell = cells.get(i);
+            String launchAnnounced = String.valueOf(cell.getLaunch_announced());
+            String launchStatus = String.valueOf(cell.getLaunch_status());
+            if (!launchAnnounced.equals(launchStatus) && launchStatus.length()==4) {
+                diffYears.add(cell);
+            }
+        }
+        // Printing cell information including oem and models
+        System.err.println("Phones with different announcement and release years:");
+        printCells(diffYears);
     }
 
     // Method to read a line from a CSV file and split it into columns
