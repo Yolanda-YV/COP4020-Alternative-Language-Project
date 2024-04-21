@@ -252,6 +252,24 @@ public class Cell {
                 return null;
         }
     }
+    // Takes in a Cell object
+    // returns the number of feature sensors as an integer
+    public static int getNumberOfFeatureSensors(Cell cell) {
+        String features = cell.getFeatures_sensors();
+        if (features == null) {
+            // if null, there are no features
+            return 0;
+        }
+        // Counting the number of commas in the string
+        int count = 0;
+        for (int i = 0; i < features.length(); i++) {
+            if (features.charAt(i) == ',') {
+                count++;
+            }
+        }
+        // Adding 1 to the count because the number of commas is the number of features - 1
+        return count + 1;
+    }
     // Takes in an array list of cell objects and a column name
     // returns the mode of the values in the column as a string
     public static String calculateMode(ArrayList<Cell> cells, String column) {
@@ -309,6 +327,18 @@ public class Cell {
         }
         return searchResults;
     }
+    // Takes in an array list of cell objects, the attribute/column name, and the value to filter by (For numerical values)
+    // returns an array list of cells from the original array list that have a value greater than the filter value for the attribute/column
+    public static ArrayList<Cell> getGreaterThan(ArrayList<Cell> cells, String attribute, double filterValue) {
+        ArrayList<Cell> filterResults = new ArrayList<Cell>();
+        for (int i = 0; i < cells.size(); i++) {
+            double value = Double.valueOf(getValue(cells.get(i), attribute));
+            if (value > filterValue) {
+                filterResults.add(cells.get(i));
+            }
+        }
+        return filterResults;
+    }
     // Takes in an array list of cell objects and the attribute/column name, 
     // returns an array list of unique values for the attribute/column
     public static ArrayList<String> getUniqueValues(ArrayList<Cell> cells, String attribute) {
@@ -324,7 +354,6 @@ public class Cell {
     // Takes in an array list of cell objects and either:
     //  - the index of a cell to delete 
     //  - the attribute name and value of cells to delete
-    //  - the attribute name and a numerical value to delete cells with a value less than the numerical value
     // Overloading deleteCell method to have 2 different ways to delete cells
     // Returns the updated array list of cell objects
     public static ArrayList<Cell> deleteCell(ArrayList<Cell> cells, int index) {

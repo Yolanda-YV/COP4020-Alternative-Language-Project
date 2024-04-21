@@ -55,6 +55,24 @@ public class Main {
         // Printing cell information including oem and models
         System.err.println("Phones with different announcement and release years:");
         printCells(diffYears);
+
+        // Finding phones with only 1 feature sensor
+        int numNoFeatureSense = 0;
+        for (int i = 0; i < cells.size(); i++) {
+            Cell cell = cells.get(i);
+            int featuresSensors = Cell.getNumberOfFeatureSensors(cell); // Using cell method to get number of features
+            if (featuresSensors == 1) {
+                numNoFeatureSense++;
+            }
+        }
+        // Printing results
+        System.out.println("Number of phones with only 1 feature sensor: " + numNoFeatureSense);
+
+        // Finding year past 1999 with most phones launched
+        // Using cell method to get cells where launch status is greater than 1999
+        ArrayList<Cell> filteredCells = Cell.getGreaterThan(cells, "launch_status", 1999);
+        String launchStatusMode = Cell.calculateMode(filteredCells, "launch_status");
+        System.out.println("Year past 1999 with most phones launched: " + launchStatusMode);
     }
 
     // Method to read a line from a CSV file and split it into columns
