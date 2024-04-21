@@ -332,9 +332,14 @@ public class Cell {
     public static ArrayList<Cell> getGreaterThan(ArrayList<Cell> cells, String attribute, double filterValue) {
         ArrayList<Cell> filterResults = new ArrayList<Cell>();
         for (int i = 0; i < cells.size(); i++) {
-            double value = Double.valueOf(getValue(cells.get(i), attribute));
-            if (value > filterValue) {
-                filterResults.add(cells.get(i));
+            String valueStr = getValue(cells.get(i), attribute);
+            if (valueStr == null || valueStr.equals("null") || valueStr.equals("Cancelled") || valueStr.equals("Discontinued")){
+                continue;
+            } else {
+                double value = Double.valueOf(valueStr);
+                if (value > filterValue) {
+                    filterResults.add(cells.get(i));
+                }
             }
         }
         return filterResults;
