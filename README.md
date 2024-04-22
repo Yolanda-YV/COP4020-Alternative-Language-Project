@@ -51,4 +51,5 @@ Yes, there were phones that were announced and released in different years. Ther
 #### 4. What year had the most phones launched in any year later than 1999? 
 2019 had the most phones launched in the years past 1999.
 #### Output from the Main.java answering all questions above
-![alt text](<Screenshot 2024-04-21 at 9.22.38 PM.png>)
+<img width="812" alt="Screenshot 2024-04-21 at 9 22 38 PM" src="https://github.com/Yolanda-YV/COP4020-Alternative-Language-Project/assets/76263266/3ccd70a3-d430-4c88-98dc-24551e24504b">
+
