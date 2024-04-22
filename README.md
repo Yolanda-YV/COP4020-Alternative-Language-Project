@@ -6,20 +6,28 @@
 I chose to use Java version 1.8.0_411 for the Alternative Language Project because of the in-demand languages listed in the assignment, Java was the language I never programmed in before.
 
 ### Object-Oriented Programming
+Java is an object oriented programming language, so Java programs are centered around objects. So, everything is treated as an object whose attributes and methods are defined by classes.
 
 ### File Ingestion
+Java uses the File class to create a file object and the Scanner class to read the file line by line.
 
 ### Conditional Statements
+If-statements, If-Else-statements, Switch statements, and ternary operators are used for conditional statements in Java.
 
 ### Assignment Statements
+Assignment statements are used to store and manipulate values inside variables in Java.
 
 ### Loops
+Java makes use of for-loops, while-loops, and do-while loops. Like in C++, there are 2 ways to implemenet a for-loop in Java: ```for (initialization; condition; update) {}``` or ```for (type variable : array) {}```. I mainly used the former method in my own code.
 
 ### Subprograms
+Because Java is an object-oriented programming language, subprograms are referred to as methods which are declared within classes. As they are a part of these classes, their accessibility can be controlled with modifiers like ```public``` and ```private```.
 
 ### Unit Testing
+Java has JUnit framework, which is open-source and was specifically made for unit testing. Unit tests are organized into test classes which contain test methods which are test cases.
 
 ### Exception Handling
+Java has try-catch blocks and exceptions (like FileNotFoundException). It's also possible to throw exceptions explicitly using the ```throw``` keyword.
 
 ## Libraries Used
 
