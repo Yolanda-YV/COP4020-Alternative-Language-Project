@@ -32,7 +32,7 @@ Imported parts of the Java.util package, specifically the following classes/pack
 - **ArrayList:** is a class that provides a resizable array
   - I used an Array List to hold Cell objects, as well as to hold results in multiple Cell class methods
 
-### Java.io
+### java.io
 Imported parts of the Java.io package, specifically the following classes
 - **File:** a class that lets you work with files
   - I used this to create a file object using the cells.csv file
@@ -50,3 +50,5 @@ Yes, there were phones that were announced and released in different years. Ther
 433 phones had only one feature sensor.
 #### 4. What year had the most phones launched in any year later than 1999? 
 2019 had the most phones launched in the years past 1999.
+#### Output from the Main.java answering all questions above
+![alt text](<Screenshot 2024-04-21 at 9.22.38 PM.png>)
